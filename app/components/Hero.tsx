@@ -45,7 +45,7 @@ const Hero: React.FC = () => {
 
 
 
-    
+      </motion.div>
 
       <div className=" flexCenter">
         <button
@@ -66,7 +66,6 @@ const Hero: React.FC = () => {
           <MdAutoAwesome className="ml-2 text-white" /> {/* Right Spark Icon */}
         </button>
       </div>
-      </motion.div>
     </section>
   );
 };
