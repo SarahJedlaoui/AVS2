@@ -27,7 +27,7 @@ const FeedBackCard = ({ content, name, title, img }: feedbackCardPropTypes) => (
       className="object-contain"
       priority={true}
     />
-    <p className="font-poppins font-normal text-[18px] leading-[32px] text-white my-10">
+    <p className="font-poppins font-normal text-[18px] leading-[32px] text-black my-10">
       {content}
     </p>
     <div className="flex">
@@ -40,7 +40,7 @@ const FeedBackCard = ({ content, name, title, img }: feedbackCardPropTypes) => (
         priority={true}
       />
       <div className="flex flex-col ml-4">
-        <h1 className="font-poppins font-semibold text-[20px] leading-[32px] text-white">
+        <h1 className="font-poppins font-semibold text-[20px] leading-[32px] text-black">
           {name}
         </h1>
         <p className="font-poppins font-normal text-[16px] leading-[24px] text-dimWhite">

@@ -9,9 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: "#00040f",
+        primary: "#E0ECFF",
         secondary: "#00f6ff",
-        dimWhite: "rgba(255, 255, 255, 0.7)",
+        dimWhite: "#E0ECFF0",
         dimBlue: "rgba(9, 151, 124, 0.1)",
       },
       fontFamily: {

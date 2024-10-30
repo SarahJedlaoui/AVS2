@@ -18,14 +18,14 @@ const Navbar = () => {
       whileInView="show"
       viewport={{ once: true }}
     >
-      <Image src={logo} alt="hoobank" width={124} height={32} loading="eager" />
+      <Image src={'/avs.png'} alt="hoobank" width={124} height={32} loading="eager" />
 
       <ul className="list-none sm:flex hidden justify-end items-center flex-1">
         {navLinks.map((nav, index) => (
           <li
             key={nav.id}
             className={`font-poppins font-normal cursor-pointer text-[16px] hover:text-secondary ${
-              active === nav.title ? "text-secondary" : "text-white"
+              active === nav.title ? "text-secondary" : "text-black"
             } ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`}
             onClick={() => setActive(nav.title)}
           >
@@ -34,10 +34,11 @@ const Navbar = () => {
         ))}
       </ul>
 
-      <div className="sm:hidden flex flex-1 justify-end items-center">
+      <div className="sm:hidden flex flex-1 justify-end items-center ">
         <Image
           src={toggle ? close : menu}
           alt="menu"
+         
           width={28}
           height={28}
           priority={true}
