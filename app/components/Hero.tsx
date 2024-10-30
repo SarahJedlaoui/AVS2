@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { slideIn } from "../styles/animations";
 import { saveAs } from "file-saver";
-import SwipeableCard from "./SwipeableCard"; 
+import SwipeableCard from "./SwipeableCard";
 import { MdAutoAwesome } from 'react-icons/md';
 import { useRouter } from "next/navigation";
 
@@ -29,7 +29,7 @@ const Hero: React.FC = () => {
           <h1 className="flex-1 font-poppins font-semibold ss:text-[72px] text-[52px] text-black ss:leading-[100.8px] leading-[75px]">
             Hi there! <br className="sm:block hidden" />
           </h1>
-          
+
         </div>
         <p className="paragraph max-w-[470px] mt-5">Your after-visit summary is ready</p>
       </motion.div>
@@ -44,9 +44,9 @@ const Hero: React.FC = () => {
         <PDFCarousel />
 
 
-        
-      </motion.div>
-     
+
+    
+
       <div className=" flexCenter">
         <button
           onClick={handleDownload}
@@ -60,12 +60,13 @@ const Hero: React.FC = () => {
       <SwipeableCard />
 
       <div className="ss:hidden flexCenter mt-7">
-      <button className="rounded-full px-6 py-3 flex items-center justify-center bg-blue-500 text-white"  onClick={() => router.push("/report")}>
-    <MdAutoAwesome className="mr-2 text-white" /> {/* Left Spark Icon */}
-    Submit
-    <MdAutoAwesome className="ml-2 text-white" /> {/* Right Spark Icon */}
-</button>
+        <button className="rounded-full px-6 py-3 flex items-center justify-center bg-blue-500 text-white" onClick={() => router.push("/report")}>
+          <MdAutoAwesome className="mr-2 text-white" /> {/* Left Spark Icon */}
+          Submit
+          <MdAutoAwesome className="ml-2 text-white" /> {/* Right Spark Icon */}
+        </button>
       </div>
+      </motion.div>
     </section>
   );
 };
