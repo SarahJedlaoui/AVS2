@@ -29,14 +29,7 @@ const Hero: React.FC = () => {
           <h1 className="flex-1 font-poppins font-semibold ss:text-[72px] text-[52px] text-black ss:leading-[100.8px] leading-[75px]">
             Hi there! <br className="sm:block hidden" />
           </h1>
-          <div className="ss:flex hidden md:mr-4 mr-0">
-            <button
-              onClick={handleDownload}
-              className="bg-blue-500 text-white px-4 py-2 rounded-3xl"
-            >
-              Download PDF
-            </button>
-          </div>
+          
         </div>
         <p className="paragraph max-w-[470px] mt-5">Your after-visit summary is ready</p>
       </motion.div>
@@ -49,9 +42,12 @@ const Hero: React.FC = () => {
         viewport={{ once: true }}
       >
         <PDFCarousel />
-      </motion.div>
 
-      <div className="ss:hidden flexCenter">
+
+        
+      </motion.div>
+     
+      <div className=" flexCenter">
         <button
           onClick={handleDownload}
           className="bg-blue-500 text-white px-4 py-2 rounded-full"
