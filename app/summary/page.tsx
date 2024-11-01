@@ -3,6 +3,7 @@ import {
     Footer,
     Summary
   } from "../components";
+  import React, { Suspense } from "react";
   
   export default function Home() {
     return (
@@ -14,7 +15,9 @@ import {
         </header>
         <section className=" bg-primary flexStart ">
           <section className="boxWidth">
-          <Summary/>
+          <Suspense fallback={<div>Loading...</div>}>
+    <Summary />
+  </Suspense>
           </section>
         </section>
         <section className=" bg-primary paddingX flexStart">
