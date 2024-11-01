@@ -47,7 +47,7 @@ const Hero: React.FC = () => {
     formData.append("options", JSON.stringify(selectedOptions));
 
     try {
-      const response = await fetch("http://localhost:5000/api/upload", {
+      const response = await fetch("https://aftervisit-0b4087b58b8e.herokuapp.com/api/upload", {
         method: "POST",
         body: formData,
       });

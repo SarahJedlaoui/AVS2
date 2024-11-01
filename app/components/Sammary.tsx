@@ -12,7 +12,6 @@ import "swiper/css/pagination";
 
 const Summary: React.FC = () => {
   const router = useRouter();
-  
 
   return (
     <section className="flex flex-col items-center justify-center h-full px-6 py-8 space-y-6 ">
