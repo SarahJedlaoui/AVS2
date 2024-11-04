@@ -8,13 +8,15 @@ import SwipeableCard from "./SwipeableCard";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { MdAutoAwesome } from 'react-icons/md';
+import CircularProgress from "@mui/material/CircularProgress";
+
 const PDFCarousel = dynamic(() => import("./PDFCarousel"), { ssr: false });
 
 const Hero: React.FC = () => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  // Load the PDF file as a Blob and create a File object
   const [pdfFile, setPdfFile] = useState<File | null>(null);
 
   useEffect(() => {
@@ -46,6 +48,8 @@ const Hero: React.FC = () => {
     formData.append("pdf", pdfFile);
     formData.append("options", JSON.stringify(selectedOptions));
 
+    setLoading(true);
+
     try {
       const response = await fetch("https://aftervisit-0b4087b58b8e.herokuapp.com/api/upload", {
         method: "POST",
@@ -53,13 +57,12 @@ const Hero: React.FC = () => {
       });
 
       if (response.ok) {
-        const responseData = await response.json();
+        const { id } = await response.json();
 
-        // Pass selected options and AI data to the report page
-        // Pass selected options and AI data to the report page
+        // Pass selected options and ID to the report page
         const queryString = new URLSearchParams({
-          items: JSON.stringify(selectedOptions),
-          data: JSON.stringify(responseData),
+          id,
+          selectedItems: JSON.stringify(selectedOptions),
         }).toString();
 
         router.push(`/report?${queryString}`);
@@ -69,15 +72,13 @@ const Hero: React.FC = () => {
     } catch (error) {
       console.error("Error:", error);
       alert("Error uploading data");
+    } finally {
+      setLoading(false);
     }
   };
 
-
-
-
-
   return (
-    <section id="home" className="flex md:flex-row flex-col paddingY">
+    <section id="home" className="flex md:flex-col flex-col paddingY">
       <motion.div
         className="flex-1 flexStart flex-col xl:px-0 paddingX"
         variants={slideIn("left", "tween", 0.2, 1.5)}
@@ -116,8 +117,24 @@ const Hero: React.FC = () => {
       <SwipeableCard onSelectOptions={handleSelectedOptions} />
 
       <div className="flexCenter mt-7">
-        <button className="rounded-full px-6 py-3 flex items-center justify-center bg-blue-500 text-white" onClick={handleSubmit}>
-          <MdAutoAwesome className="mr-2 text-white" /> Submit <MdAutoAwesome className="ml-2 text-white" />
+        <button
+          className={`rounded-full px-6 py-3 flex items-center justify-center ${
+            loading ? "bg-blue-700" : "bg-blue-500"
+          } text-white`}
+          onClick={handleSubmit}
+          disabled={loading}
+        >
+          {loading ? (
+            <CircularProgress color="inherit" size={20} className="mr-2" />
+          ) : (
+            <MdAutoAwesome className="mr-2 text-white" />
+          )}
+          Submit {"  "}
+          {loading ? (
+            <CircularProgress color="inherit" size={20} className="mr-2" />
+          ) : (
+            <MdAutoAwesome className="mr-2 text-white" />
+          )}
         </button>
       </div>
     </section>

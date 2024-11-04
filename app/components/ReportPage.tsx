@@ -12,23 +12,20 @@ const ReportPage: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Retrieve items and data from query parameters
-  const items = JSON.parse(searchParams.get("items") || "[]");
-  const data = JSON.parse(searchParams.get("data") || "{}");
+  // Retrieve selected items and the ID from query parameters
+  const items = JSON.parse(searchParams.get("selectedItems") || "[]");
+  const id = searchParams.get("id");
 
   useEffect(() => {
     // Redirect to summary page after showing the report page for a few seconds
     const timer = setTimeout(() => {
-      const queryString = new URLSearchParams({
-        data: JSON.stringify(data),
-      }).toString();
-
-      router.push(`/summary?${queryString}`);
+      if (id) {
+        router.push(`/summary?id=${id}`);
+      }
     }, 3000); // 3 seconds delay
 
     return () => clearTimeout(timer); // Clean up the timer on component unmount
-  }, [router, data]);
-
+  }, [router, id]);
 
   return (
     <section className="flex flex-col items-center justify-center h-screen px-4 mt--500">
@@ -53,23 +50,23 @@ const ReportPage: React.FC = () => {
           }}
         />
       </div>
-      <div className="mt-6 flex flex-col space-y-4 w-full max-w-md">
-  {/* Display selected items */}
-  {items.map((item: string, index: number) => (
-    <motion.div
-      key={index}
-      className="bg-white rounded-3xl p-4 shadow-lg flex items-start gap-4"
-      variants={slideIn("bottom", "tween", 0.2 * (index + 1), 1)}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true }}
-    >
-      <MdAutoAwesome className="text-gray-400 text-2xl" />
-      <p className="text-gray-700 font-medium text-left">{item}</p>
-    </motion.div>
-  ))}
-</div>
 
+      <div className="mt-6 flex flex-col space-y-4 w-full max-w-md">
+        {/* Display selected items */}
+        {items.map((item: string, index: number) => (
+          <motion.div
+            key={index}
+            className="bg-white rounded-3xl p-4 shadow-lg flex items-start gap-4"
+            variants={slideIn("bottom", "tween", 0.2 * (index + 1), 1)}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
+            <MdAutoAwesome className="text-gray-400 text-2xl" />
+            <p className="text-gray-700 font-medium text-left">{item}</p>
+          </motion.div>
+        ))}
+      </div>
 
       <div className="mt-6 flex space-x-4">
         <button

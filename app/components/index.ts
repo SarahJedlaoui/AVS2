@@ -10,6 +10,8 @@ import Testimonials from "./Testimonials";
 import Hero from "./Hero";
 import ReportPage from "./ReportPage";
 import Summary from "./Sammary";
+import Boarding1 from "./Boarding1";
+import Boarding2 from "./Boarding2";
 export {
   Navbar,
   Billing,
@@ -22,5 +24,7 @@ export {
   Testimonials,
   Hero,
   Summary,
-  ReportPage
+  ReportPage,
+  Boarding1,
+  Boarding2
 };
