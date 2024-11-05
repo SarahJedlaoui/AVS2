@@ -12,6 +12,7 @@ import ReportPage from "./ReportPage";
 import Summary from "./Sammary";
 import Boarding1 from "./Boarding1";
 import Boarding2 from "./Boarding2";
+import Boarding3 from "./Boarding3";
 export {
   Navbar,
   Billing,
@@ -26,5 +27,6 @@ export {
   Summary,
   ReportPage,
   Boarding1,
-  Boarding2
+  Boarding2,
+  Boarding3
 };

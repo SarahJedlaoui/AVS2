@@ -10,10 +10,7 @@ const Boarding2: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const handleStartClick = () => {
-    setLoading(true);
-    setTimeout(() => {
-      router.push("/nextpage"); // Replace with the actual path
-    }, 2000);
+      router.push("/on-boarding3"); 
   };
 
   return (
@@ -135,10 +132,9 @@ const Boarding2: React.FC = () => {
             "&:hover": { backgroundColor: "#005bb5" },
           }}
           onClick={handleStartClick}
-          startIcon={loading ? <CircularProgress size={30} color="inherit" /> : null}
-          disabled={loading}
+        
         >
-          {loading ? "Loading..." : "Let's Start"}
+          "Let's Start
         </Button>
       </Box>
     </Box>
