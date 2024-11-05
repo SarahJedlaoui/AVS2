@@ -16,7 +16,8 @@ const Boarding1: React.FC = () => {
     return (
         <Box
             sx={{
-                height: "100vh",
+                minHeight: "100vh",
+                overflowY: "auto",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -131,7 +132,7 @@ const Boarding1: React.FC = () => {
                         "&:hover": { backgroundColor: "#005bb5" },
                     }}
                     onClick={handleStartClick}
-                   
+
                 >
                     Let's Start
                 </Button>

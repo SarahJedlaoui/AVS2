@@ -16,7 +16,8 @@ const Boarding2: React.FC = () => {
   return (
     <Box
       sx={{
-        height: "100vh",
+        minHeight: "100vh",
+        overflowY:"auto",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
