@@ -79,30 +79,19 @@ const Hero: React.FC = () => {
 
   return (
     <section id="home" className="flex md:flex-col flex-col paddingY">
-      <motion.div
-        className="flex-1 flexStart flex-col xl:px-0 paddingX"
-        variants={slideIn("left", "tween", 0.2, 1.5)}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-      >
+      <section className="flex-1 flexStart flex-col xl:px-0 paddingX" >
         <div className="flex flex-row justify-between items-center w-full">
           <h1 className="flex-1 font-poppins font-semibold ss:text-[72px] text-[52px] text-black ss:leading-[100.8px] leading-[75px]">
             Hi there! <br className="sm:block hidden" />
           </h1>
         </div>
         <p className="paragraph max-w-[470px] mt-5">Your after-visit summary is ready</p>
-      </motion.div>
+      </section>
 
-      <motion.div
-        className="flex-1 flexCenter md:my-0 my-10 relative"
-        variants={slideIn("right", "tween", 0.2, 1.5)}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-      >
+      <section
+        className="flex-1 flexCenter md:my-0 my-10 relative" >
         <PDFCarousel />
-      </motion.div>
+      </section>
 
       <div className="flexCenter">
         <button
