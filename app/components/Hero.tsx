@@ -119,11 +119,7 @@ const Hero: React.FC = () => {
             <MdAutoAwesome className="mr-2 text-white" />
           )}
           Submit {"  "}
-          {loading ? (
-            <CircularProgress color="inherit" size={20} className="mr-2" />
-          ) : (
-            <MdAutoAwesome className="mr-2 text-white" />
-          )}
+         
         </button>
       </div>
     </section>
