@@ -14,9 +14,9 @@ export default function Home() {
       </header>
       <section className=" bg-primary flexStart ">
         <section className="boxWidth">
-        
+          <Suspense fallback={<div>Loading...</div>}>
             <ReportPage />
-    
+          </Suspense>
 
         </section>
       </section>
