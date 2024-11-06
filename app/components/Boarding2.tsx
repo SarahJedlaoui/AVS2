@@ -29,7 +29,7 @@ const Boarding2: React.FC = () => {
       <Box sx={{ alignSelf: "flex-end", padding: 2 }}>
         <Typography
           sx={{ color: "#FFFFFF", cursor: "pointer", fontSize: "18px" }}
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/on-bording3")}
         >
           Skip
         </Typography>
@@ -135,7 +135,7 @@ const Boarding2: React.FC = () => {
           onClick={handleStartClick}
         
         >
-          "Let's Start
+          Let's Start
         </Button>
       </Box>
     </Box>

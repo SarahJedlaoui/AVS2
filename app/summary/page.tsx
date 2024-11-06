@@ -1,6 +1,5 @@
 import {
   Navbar,
-  Footer,
   Summary
 } from "../components";
 import React, { Suspense } from "react";
@@ -20,7 +19,6 @@ export default function Home() {
           </Suspense>
         </section>
       </section>
-     
     </main>
   );
 }
