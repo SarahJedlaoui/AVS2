@@ -85,95 +85,101 @@ const Summary: React.FC = () => {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center h-full px-6 py-8 space-y-6">
-      {/* Title Section */}
-      <motion.div
-        className="flex justify-between w-full max-w-md"
-        variants={slideIn("top", "tween", 0.2, 1.5)}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-      >
-        <h1 className="font-semibold text-lg text-gray-800">After Visit Summary</h1>
-        <div className="text-gray-600">
-          <p>Report: 10/31/24</p>
-          <p>Dr. Crotty</p>
+    <section
+      className="flex flex-col items-center  min-h-full px-6 py-8 space-y-6"
+      style={{ backgroundColor: "#E0ECFF", minHeight: "100vh" }}
+    >
+      {/* Content Container */}
+      <div className=" w-full max-w-md" style={{ backgroundColor: "transparent" }}>
+        {/* Title Section */}
+        <motion.div
+          className="flex justify-between w-full max-w-md"
+          variants={slideIn("top", "tween", 0.2, 1.5)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+        >
+          <h1 className="font-semibold text-lg text-gray-800">After Visit Summary</h1>
+          <div className="text-gray-600">
+            <p>Report: 10/31/24</p>
+            <p>Dr. Crotty</p>
+          </div>
+        </motion.div>
+
+        {/* Progress Bar */}
+        <div className="w-full max-w-md">
+          <p className="text-sm text-gray-700 mb-1">
+            Progress: {selectedItems.length} tasks completed
+          </p>
+          <LinearProgress
+            variant="determinate"
+            value={(selectedItems.length / filters.length) * 100}
+            sx={{
+              height: 8,
+              borderRadius: 4,
+              backgroundColor: "#e0e0de",
+              "& .MuiLinearProgress-bar": { backgroundColor: "#1e90ff" },
+            }}
+          />
         </div>
-      </motion.div>
 
-      {/* Progress Bar */}
-      <div className="w-full max-w-md">
-        <p className="text-sm text-gray-700 mb-1">
-          Progress: {selectedItems.length} tasks completed
-        </p>
-        <LinearProgress
-          variant="determinate"
-          value={(selectedItems.length / filters.length) * 100}
-          sx={{
-            height: 8,
-            borderRadius: 4,
-            backgroundColor: "#e0e0de",
-            "& .MuiLinearProgress-bar": { backgroundColor: "#1e90ff" },
-          }}
-        />
-      </div>
+        {/* Filter Buttons */}
+        <div className="flex w-full max-w-md space-x-2 overflow-auto py-4">
+          {filters.map((section) => (
+            <button
+              key={section}
+              className={clsx(
+                "px-4 py-2 rounded-full font-medium",
+                filter === section ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+              )}
+              onClick={() => setFilter(section)}
+            >
+              {section}
+            </button>
+          ))}
+        </div>
 
-      {/* Filter Buttons */}
-      <div className="flex w-full max-w-md space-x-2 overflow-auto py-4">
-        {filters.map((section) => (
-          <button
-            key={section}
-            className={clsx(
-              "px-4 py-2 rounded-full font-medium",
-              filter === section ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
-            )}
-            onClick={() => setFilter(section)}
-          >
-            {section}
-          </button>
-        ))}
-      </div>
+        {/* Conditionally Rendered Sections */}
+        {(filter === "All" || filter === "Symptoms") && isSectionVisible("Symptoms") ? (
+          <div className="w-full max-w-md mt-4">
+            <h2 className="font-semibold text-gray-800 mb-3">Symptoms</h2>
+            <Swiper spaceBetween={10} slidesPerView={1} className="w-full max-w-md">
+              {parsedData.symptoms?.map((symptom, index) => (
+                <SwiperSlide key={index}>
+                  <SummaryCard title={symptom.title} description={symptom.description || "No description available"} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        ) : null}
 
-      {/* Conditionally Rendered Sections */}
-      {(filter === "All" || filter === "Symptoms") && isSectionVisible("Symptoms") ? (
-        <div className="w-full max-w-md mt-4">
-          <h2 className="font-semibold text-gray-800 mb-3">Symptoms</h2>
-          <Swiper spaceBetween={10} slidesPerView={1} className="w-full max-w-md">
-            {parsedData.symptoms?.map((symptom, index) => (
-              <SwiperSlide key={index}>
-                <SummaryCard title={symptom.title} description={symptom.description || "No description available"} />
-              </SwiperSlide>
+        {(filter === "All" || filter === "Next Steps") && isSectionVisible("Next Steps") ? (
+          <div className="w-full max-w-md mt-4">
+            <h2 className="font-semibold text-gray-800 mb-3">To-dos</h2>
+            {parsedData.todos?.map((todo, index) => (
+              <ToDoItem key={index} text={todo} />
             ))}
-          </Swiper>
-        </div>
-      ) : null}
+          </div>
+        ) : null}
 
-      {(filter === "All" || filter === "Next Steps") && isSectionVisible("Next Steps") ? (
-        <div className="w-full max-w-md">
-          <h2 className="font-semibold text-gray-800 mb-3">To-dos</h2>
-          {parsedData.todos?.map((todo, index) => (
-            <ToDoItem key={index} text={todo} />
-          ))}
-        </div>
-      ) : null}
+        {(filter === "All" || filter === "Appointments") && isSectionVisible("Appointments") ? (
+          <div className="w-full max-w-md mt-4">
+            <h2 className="font-semibold text-gray-800 mb-3">Appointments</h2>
+            {parsedData.appointments?.map((appointment, index) => (
+              <NextAppointment key={index} appointment={appointment} />
+            ))}
+          </div>
+        ) : null}
 
-      {(filter === "All" || filter === "Appointments") && isSectionVisible("Appointments") ? (
-        <div className="w-full max-w-md">
-          <h2 className="font-semibold text-gray-800 mb-3">Appointments</h2>
-          {parsedData.appointments?.map((appointment, index) => (
-            <NextAppointment key={index} appointment={appointment} />
-          ))}
-        </div>
-      ) : null}
-
-      {(filter === "All" || filter === "Medication Updates") && isSectionVisible("Medication Updates") ? (
-        <div className="w-full max-w-md mt-6">
-          <h2 className="font-semibold text-gray-800 mb-3">Medications</h2>
-          {parsedData.medications?.map((medication, index) => (
-            <MedicationCard key={index} medication={medication} />
-          ))}
-        </div>
-      ) : null}
+        {(filter === "All" || filter === "Medication Updates") && isSectionVisible("Medication Updates") ? (
+          <div className="w-full max-w-md mt-4">
+            <h2 className="font-semibold text-gray-800 mb-3">Medications</h2>
+            {parsedData.medications?.map((medication, index) => (
+              <MedicationCard key={index} medication={medication} />
+            ))}
+          </div>
+        ) : null}
+      </div>
     </section>
   );
 };
