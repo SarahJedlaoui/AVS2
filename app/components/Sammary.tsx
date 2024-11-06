@@ -63,37 +63,37 @@ const Summary: React.FC = () => {
     }
   }, [searchParams]);
 
-  if (!parsedData) {
-    return <div>Loading...</div>;
-  }
-
   const filters = ["All", "Next Steps", "Appointments", "Symptoms", "Medication Updates"];
 
   const isSectionVisible = (section: string) => {
     switch (section) {
       case "Next Steps":
-        return selectedItems.includes("Next Steps") && parsedData.todos;
+        return selectedItems.includes("Next Steps") && parsedData?.todos;
       case "Appointments":
-        return selectedItems.includes("Appointments") && parsedData.appointments;
+        return selectedItems.includes("Appointments") && parsedData?.appointments;
       case "Symptoms":
-        return selectedItems.includes("Symptoms to Watch") && parsedData.symptoms;
+        return selectedItems.includes("Symptoms to Watch") && parsedData?.symptoms;
       case "Medication Updates":
-        return selectedItems.includes("Medication Updates") && parsedData.medications;
+        return selectedItems.includes("Medication Updates") && parsedData?.medications;
       default:
         return false;
     }
   };
 
+  const handleAddSection = (section: string) => {
+    setSelectedItems((prevItems) => [...prevItems, section]);
+  };
+
   return (
     <section
-      className="flex flex-col items-center  min-h-full px-6 py-8 space-y-6"
-      style={{ backgroundColor: "#E0ECFF", minHeight: "100vh" }}
+      className="flex flex-col items-center min-h-screen px-6 py-8 space-y-6"
+      style={{ backgroundColor: "#E0ECFF" }}
     >
       {/* Content Container */}
-      <div className=" w-full max-w-md" style={{ backgroundColor: "transparent" }}>
+      <div className="w-full max-w-md" style={{ backgroundColor: "transparent" }}>
         {/* Title Section */}
         <motion.div
-          className="flex justify-between w-full max-w-md"
+          className="flex justify-between w-full"
           variants={slideIn("top", "tween", 0.2, 1.5)}
           initial="hidden"
           whileInView="show"
@@ -107,9 +107,9 @@ const Summary: React.FC = () => {
         </motion.div>
 
         {/* Progress Bar */}
-        <div className="w-full max-w-md">
+        <div className="w-full">
           <p className="text-sm text-gray-700 mb-1">
-            Progress: {selectedItems.length} tasks completed
+            Progress: {selectedItems.length} section to see 
           </p>
           <LinearProgress
             variant="determinate"
@@ -124,7 +124,7 @@ const Summary: React.FC = () => {
         </div>
 
         {/* Filter Buttons */}
-        <div className="flex w-full max-w-md space-x-2 overflow-auto py-4">
+        <div className="flex w-full space-x-2 overflow-auto py-4">
           {filters.map((section) => (
             <button
               key={section}
@@ -141,44 +141,60 @@ const Summary: React.FC = () => {
 
         {/* Conditionally Rendered Sections */}
         {(filter === "All" || filter === "Symptoms") && isSectionVisible("Symptoms") ? (
-          <div className="w-full max-w-md mt-4">
+          <div className="w-full mt-4">
             <h2 className="font-semibold text-gray-800 mb-3">Symptoms</h2>
-            <Swiper spaceBetween={10} slidesPerView={1} className="w-full max-w-md">
-              {parsedData.symptoms?.map((symptom, index) => (
+            <Swiper spaceBetween={10} slidesPerView={1}>
+              {parsedData?.symptoms?.map((symptom, index) => (
                 <SwiperSlide key={index}>
                   <SummaryCard title={symptom.title} description={symptom.description || "No description available"} />
                 </SwiperSlide>
               ))}
             </Swiper>
           </div>
-        ) : null}
+        ) : filter === "Symptoms" && (
+          <button onClick={() => handleAddSection("Symptoms to Watch")} className="bg-blue-500 text-white px-4 py-2 rounded-full  mt-4">
+            Add this section
+          </button>
+        )}
 
         {(filter === "All" || filter === "Next Steps") && isSectionVisible("Next Steps") ? (
-          <div className="w-full max-w-md mt-4">
+          <div className="w-full mt-4">
             <h2 className="font-semibold text-gray-800 mb-3">To-dos</h2>
-            {parsedData.todos?.map((todo, index) => (
+            {parsedData?.todos?.map((todo, index) => (
               <ToDoItem key={index} text={todo} />
             ))}
           </div>
-        ) : null}
+        ) : filter === "Next Steps" && (
+          <button onClick={() => handleAddSection("Next Steps")} className="bg-blue-500 text-white px-4 py-2 rounded-full mt-4">
+            Add this section
+          </button>
+        )}
 
         {(filter === "All" || filter === "Appointments") && isSectionVisible("Appointments") ? (
-          <div className="w-full max-w-md mt-4">
+          <div className="w-full mt-4">
             <h2 className="font-semibold text-gray-800 mb-3">Appointments</h2>
-            {parsedData.appointments?.map((appointment, index) => (
+            {parsedData?.appointments?.map((appointment, index) => (
               <NextAppointment key={index} appointment={appointment} />
             ))}
           </div>
-        ) : null}
+        ) : filter === "Appointments" && (
+          <button onClick={() => handleAddSection("Appointments")} className="bg-blue-500 text-white px-4 py-2 rounded-full  mt-4">
+            Add this section
+          </button>
+        )}
 
         {(filter === "All" || filter === "Medication Updates") && isSectionVisible("Medication Updates") ? (
-          <div className="w-full max-w-md mt-4">
+          <div className="w-full mt-4">
             <h2 className="font-semibold text-gray-800 mb-3">Medications</h2>
-            {parsedData.medications?.map((medication, index) => (
+            {parsedData?.medications?.map((medication, index) => (
               <MedicationCard key={index} medication={medication} />
             ))}
           </div>
-        ) : null}
+        ) : filter === "Medication Updates" && (
+          <button onClick={() => handleAddSection("Medication Updates")} className="bg-blue-500 text-white px-4 py-2 rounded-full mt-4">
+            Add this section
+          </button>
+        )}
       </div>
     </section>
   );
@@ -209,23 +225,16 @@ const ToDoItem: React.FC<{ text: string }> = ({ text }) => (
 
 // Next Appointment Component
 const NextAppointment: React.FC<{ appointment: Appointment }> = ({ appointment }) => (
-  <div className="bg-white rounded-lg p-4 shadow-lg w-full max-w-md mt-6">
+  <div className="bg-white rounded-lg p-4 shadow-lg w-full mt-4">
     <h2 className="font-semibold text-gray-800">Next appointment</h2>
-    <p className="text-sm text-gray-700 mt-2">
-      <strong>Date:</strong> {appointment.date} at {appointment.time || "N/A"}
-    </p>
-    <p className="text-sm text-gray-700">
-      <strong>Location:</strong> {appointment.location}
-    </p>
-    <p className="text-sm text-gray-700">
-      <strong>Phone Number:</strong> {appointment.phone}
-    </p>
+    <p className="text-sm text-gray-700 mt-2"><strong>Date:</strong> {appointment.date} at {appointment.time || "N/A"}</p>
+    <p className="text-sm text-gray-700"><strong>Location:</strong> {appointment.location}</p>
+    <p className="text-sm text-gray-700"><strong>Phone Number:</strong> {appointment.phone}</p>
     <button className="bg-blue-500 text-white px-4 py-2 rounded-full font-medium mt-4 flex items-center justify-center w-full">
       <MdCalendarToday className="mr-2" /> Reschedule
     </button>
   </div>
 );
-
 // Medication Card Component
 const MedicationCard: React.FC<{ medication: Medication }> = ({ medication }) => (
   <div className="bg-white rounded-lg p-4 shadow-lg w-full text-left mb-2">
@@ -234,5 +243,6 @@ const MedicationCard: React.FC<{ medication: Medication }> = ({ medication }) =>
     <p className="text-gray-600 text-sm mt-1">Instructions: {medication.usage_instructions || "No instructions provided"}</p>
   </div>
 );
+
 
 export default Summary;
