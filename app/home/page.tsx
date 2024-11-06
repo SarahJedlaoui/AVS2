@@ -17,11 +17,7 @@ export default function Home() {
           <Hero />
         </section>
       </section>
-      <section className=" bg-primary paddingX flexStart">
-        <section className="boxWidth">
-          <Footer />
-        </section>
-      </section>
+     
     </main>
   );
 }

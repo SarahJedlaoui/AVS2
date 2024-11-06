@@ -15,12 +15,19 @@ const ReportPage: React.FC = () => {
   // Retrieve selected items and the ID from query parameters
   const items = JSON.parse(searchParams.get("selectedItems") || "[]");
   const id = searchParams.get("id");
+  
 
   useEffect(() => {
     // Redirect to summary page after showing the report page for a few seconds
     const timer = setTimeout(() => {
       if (id) {
-        router.push(`/summary?id=${id}`);
+        // Pass both ID and selected items to the Summary page
+        const queryString = new URLSearchParams({
+          id,
+          selectedItems: JSON.stringify(items), // Encode selected items as a JSON string
+        }).toString();
+
+        router.push(`/summary?${queryString}`);
       }
     }, 3000); // 3 seconds delay
 

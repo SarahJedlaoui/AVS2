@@ -1,4 +1,3 @@
-// Summary.tsx
 "use client";
 import { motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -10,6 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import axios from "axios";
+import clsx from "clsx";
 
 interface Appointment {
   date: string;
@@ -40,25 +40,49 @@ const Summary: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [parsedData, setParsedData] = useState<BackendData | null>(null);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [filter, setFilter] = useState<string>("All"); // Filter state
 
   useEffect(() => {
     const id = searchParams.get("id");
+    const items = searchParams.get("selectedItems");
+
     if (id) {
       axios
         .get(`https://aftervisit-0b4087b58b8e.herokuapp.com/api/data/${id}`)
         .then((response) => {
-          setParsedData(response.data.data); // Set to `response.data.data` to match response structure
-          console.log("Data received on Summary page:", response.data.data);
+          setParsedData(response.data.data);
         })
         .catch((error) => {
           console.error("Error fetching summary data:", error);
         });
     }
+
+    if (items) {
+      setSelectedItems(JSON.parse(items));
+    }
   }, [searchParams]);
 
   if (!parsedData) {
-    return <div>Loading...</div>; // Add a loading state
+    return <div>Loading...</div>;
   }
+
+  const filters = ["All", "Next Steps", "Appointments", "Symptoms", "Medication Updates"];
+
+  const isSectionVisible = (section: string) => {
+    switch (section) {
+      case "Next Steps":
+        return selectedItems.includes("Next Steps") && parsedData.todos;
+      case "Appointments":
+        return selectedItems.includes("Appointments") && parsedData.appointments;
+      case "Symptoms":
+        return selectedItems.includes("Symptoms to Watch") && parsedData.symptoms;
+      case "Medication Updates":
+        return selectedItems.includes("Medication Updates") && parsedData.medications;
+      default:
+        return false;
+    }
+  };
 
   return (
     <section className="flex flex-col items-center justify-center h-full px-6 py-8 space-y-6">
@@ -80,15 +104,11 @@ const Summary: React.FC = () => {
       {/* Progress Bar */}
       <div className="w-full max-w-md">
         <p className="text-sm text-gray-700 mb-1">
-          {parsedData?.symptoms?.length || 0} of {parsedData?.symptoms?.length || 1} Symptoms
+          Progress: {selectedItems.length} tasks completed
         </p>
         <LinearProgress
           variant="determinate"
-          value={
-            parsedData?.symptoms && parsedData.symptoms.length > 0
-              ? 100 / parsedData.symptoms.length
-              : 0
-          }
+          value={(selectedItems.length / filters.length) * 100}
           sx={{
             height: 8,
             borderRadius: 4,
@@ -98,56 +118,62 @@ const Summary: React.FC = () => {
         />
       </div>
 
-      {/* Symptoms Section */}
-      {parsedData.symptoms && parsedData.symptoms.length > 0 ? (
-        <Swiper spaceBetween={10} slidesPerView={1} className="w-full max-w-md">
-          {parsedData.symptoms.map((symptom, index) => (
-            <SwiperSlide key={index}>
-              <SummaryCard
-                title={symptom.title}
-                description={symptom.description || "No description available"}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      ) : null}
-
-      {/* To-Do List */}
-      <div className="w-full max-w-md">
-        <h2 className="font-semibold text-gray-800 mb-3">To-dos</h2>
-        {parsedData.todos && parsedData.todos.length > 0 ? (
-          parsedData.todos.map((todo, index) => <ToDoItem key={index} text={todo} />)
-        ) : (
-          <p className="text-gray-600">No to-dos available</p>
-        )}
+      {/* Filter Buttons */}
+      <div className="flex w-full max-w-md space-x-2 overflow-auto py-4">
+        {filters.map((section) => (
+          <button
+            key={section}
+            className={clsx(
+              "px-4 py-2 rounded-full font-medium",
+              filter === section ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+            )}
+            onClick={() => setFilter(section)}
+          >
+            {section}
+          </button>
+        ))}
       </div>
 
-      {/* Appointment Section */}
-      {parsedData.appointments && parsedData.appointments.length > 0 ? (
-        parsedData.appointments.map((appointment, index) => (
-          <NextAppointment key={index} appointment={appointment} />
-        ))
+      {/* Conditionally Rendered Sections */}
+      {(filter === "All" || filter === "Symptoms") && isSectionVisible("Symptoms") ? (
+        <div className="w-full max-w-md mt-4">
+          <h2 className="font-semibold text-gray-800 mb-3">Symptoms</h2>
+          <Swiper spaceBetween={10} slidesPerView={1} className="w-full max-w-md">
+            {parsedData.symptoms?.map((symptom, index) => (
+              <SwiperSlide key={index}>
+                <SummaryCard title={symptom.title} description={symptom.description || "No description available"} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       ) : null}
 
-      {/* Medications Section */}
-      {parsedData.medications && parsedData.medications.length > 0 && (
+      {(filter === "All" || filter === "Next Steps") && isSectionVisible("Next Steps") ? (
+        <div className="w-full max-w-md">
+          <h2 className="font-semibold text-gray-800 mb-3">To-dos</h2>
+          {parsedData.todos?.map((todo, index) => (
+            <ToDoItem key={index} text={todo} />
+          ))}
+        </div>
+      ) : null}
+
+      {(filter === "All" || filter === "Appointments") && isSectionVisible("Appointments") ? (
+        <div className="w-full max-w-md">
+          <h2 className="font-semibold text-gray-800 mb-3">Appointments</h2>
+          {parsedData.appointments?.map((appointment, index) => (
+            <NextAppointment key={index} appointment={appointment} />
+          ))}
+        </div>
+      ) : null}
+
+      {(filter === "All" || filter === "Medication Updates") && isSectionVisible("Medication Updates") ? (
         <div className="w-full max-w-md mt-6">
           <h2 className="font-semibold text-gray-800 mb-3">Medications</h2>
-          {parsedData.medications.map((medication, index) => (
+          {parsedData.medications?.map((medication, index) => (
             <MedicationCard key={index} medication={medication} />
           ))}
         </div>
-      )}
-
-      {/* Navigation Buttons */}
-      <div className="flex space-x-4 mt-8">
-        <button
-          className="bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-medium"
-          onClick={() => router.push("/")}
-        >
-          Previous
-        </button>
-      </div>
+      ) : null}
     </section>
   );
 };
@@ -198,12 +224,8 @@ const NextAppointment: React.FC<{ appointment: Appointment }> = ({ appointment }
 const MedicationCard: React.FC<{ medication: Medication }> = ({ medication }) => (
   <div className="bg-white rounded-lg p-4 shadow-lg w-full text-left mb-2">
     <h3 className="font-semibold text-gray-800">{medication.name}</h3>
-    <p className="text-gray-600 text-sm mt-1">
-      Quantity: {medication.quantity || "N/A"}
-    </p>
-    <p className="text-gray-600 text-sm mt-1">
-      Instructions: {medication.usage_instructions || "No instructions provided"}
-    </p>
+    <p className="text-gray-600 text-sm mt-1">Quantity: {medication.quantity || "N/A"}</p>
+    <p className="text-gray-600 text-sm mt-1">Instructions: {medication.usage_instructions || "No instructions provided"}</p>
   </div>
 );
 

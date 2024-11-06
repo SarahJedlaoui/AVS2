@@ -20,12 +20,7 @@ export default function Home() {
 
         </section>
       </section>
-      <section className=" bg-primary paddingX flexStart">
-        <section className="boxWidth">
-
-          <Footer />
-        </section>
-      </section>
+     
     </main>
   );
 }

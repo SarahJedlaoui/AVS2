@@ -20,7 +20,6 @@ const SwipeableCard: React.FC<SwipeableCardProps> = ({ onSelectOptions }) => {
   const [buttonState, setButtonState] = useState({ left: false, right: false });
   
   const options = [
-    { title: "Diagnosis Information", description: "Overview of your recent health assessments and findings.", icon: "ℹ️" },
     { title: "Appointments", description: "Details of upcoming and past scheduled medical visits.", icon: "📅" },
     { title: "Medication Updates", description: "Information on any recent changes to your prescriptions.", icon: "💊" },
     { title: "Symptoms to Watch", description: "Key symptoms to be mindful of as part of your care plan.", icon: "⚠️" },
