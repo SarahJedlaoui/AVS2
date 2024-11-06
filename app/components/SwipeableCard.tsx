@@ -18,7 +18,8 @@ const SwipeableCard: React.FC<SwipeableCardProps> = ({ onSelectOptions }) => {
   const [currentCard, setCurrentCard] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [buttonState, setButtonState] = useState({ left: false, right: false });
-  
+  const [showCompletionMessage, setShowCompletionMessage] = useState(false);
+
   const options = [
     { title: "Appointments", description: "Details of upcoming and past scheduled medical visits.", icon: "📅" },
     { title: "Medication Updates", description: "Information on any recent changes to your prescriptions.", icon: "💊" },
@@ -26,26 +27,28 @@ const SwipeableCard: React.FC<SwipeableCardProps> = ({ onSelectOptions }) => {
     { title: "Next Steps", description: "Recommended actions to continue your treatment and recovery.", icon: "🔄" },
   ];
 
+  const isLastCard = currentCard === options.length - 1;
+
   const swipeCard = async (direction: "left" | "right") => {
-    // Update the button state for color change
+    if (showCompletionMessage) return; // Do nothing if the completion message is shown
+
     setButtonState({ left: direction === "left", right: direction === "right" });
 
     if (direction === "right") {
       setSelectedOptions((prev) => [...prev, options[currentCard].title]);
     }
     await controls.start(direction === "left" ? "swipeLeft" : "swipeRight");
-    
-    // Only advance to the next card if not on the last one
-    if (currentCard < options.length - 1) {
-      setCurrentCard((prev) => prev + 1);
-    }
-    controls.start("initial");
 
-    // Reset button state after swipe
+    if (!isLastCard) {
+      setCurrentCard((prev) => prev + 1);
+    } else {
+      setShowCompletionMessage(true); // Show the completion message on the last card
+    }
+
+    controls.start("initial");
     setButtonState({ left: false, right: false });
   };
 
-  // Send selected options back to the parent component whenever it changes
   useEffect(() => {
     onSelectOptions(selectedOptions);
   }, [selectedOptions, onSelectOptions]);
@@ -82,17 +85,26 @@ const SwipeableCard: React.FC<SwipeableCardProps> = ({ onSelectOptions }) => {
           <button
             onClick={() => swipeCard("left")}
             className={`w-12 h-12 rounded-full flex items-center justify-center shadow-md ${buttonState.left ? "bg-red-500 text-white" : "bg-red-100 text-red-500"}`}
+            disabled={showCompletionMessage}
           >
             ❌
           </button>
           <button
             onClick={() => swipeCard("right")}
             className={`w-12 h-12 rounded-full flex items-center justify-center shadow-md ${buttonState.right ? "bg-green-500 text-white" : "bg-green-100 text-green-500"}`}
+            disabled={showCompletionMessage}
           >
             ✔️
           </button>
         </div>
       </motion.div>
+
+      {/* Completion Message */}
+      {showCompletionMessage && (
+        <div className="mt-6 p-4 bg-green-100 text-green-800 rounded-lg w-[90%] max-w-md text-center">
+          <p>All sections have been reviewed. Please submit to view your report!</p>
+        </div>
+      )}
     </motion.div>
   );
 };

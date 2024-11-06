@@ -121,7 +121,7 @@ const Summary: React.FC = () => {
               "& .MuiLinearProgress-bar": { backgroundColor: "#1e90ff" },
             }}
           />
-        </div>
+        </div> 
 
         {/* Filter Buttons */}
         <div className="flex w-full space-x-2 overflow-auto py-4">
