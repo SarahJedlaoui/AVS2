@@ -96,7 +96,7 @@ const Hero: React.FC = () => {
       <div className="flexCenter">
         <button
           onClick={handleDownload}
-          className="bg-blue-500 text-white px-4 py-2 rounded-full"
+          className="bg-customblue text-white px-4 py-2 rounded-full"
         >
           Download PDF
         </button>
@@ -108,7 +108,7 @@ const Hero: React.FC = () => {
       <div className="flexCenter mt-7">
         <button
           className={`rounded-full px-6 py-3 flex items-center justify-center ${
-            loading ? "bg-blue-700" : "bg-blue-500"
+            loading ? "bg-blue-700" : "bg-customblue"
           } text-white`}
           onClick={handleSubmit}
           disabled={loading}

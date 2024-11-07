@@ -21,17 +21,10 @@ import {
       title: "Home",
     },
     {
-      id: "features",
-      title: "Features",
+      id: "labs",
+      title: "Labs",
     },
-    {
-      id: "product",
-      title: "Product",
-    },
-    {
-      id: "clients",
-      title: "Clients",
-    },
+    
   ];
   
   export const features = [

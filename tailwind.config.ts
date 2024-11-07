@@ -13,6 +13,7 @@ const config: Config = {
         secondary: "#00f6ff",
         dimWhite: "#E0ECFF0",
         dimBlue: "rgba(9, 151, 124, 0.1)",
+        customblue: '#1C4FA0'
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],

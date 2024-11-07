@@ -13,6 +13,9 @@ import Summary from "./Sammary";
 import Boarding1 from "./Boarding1";
 import Boarding2 from "./Boarding2";
 import Boarding3 from "./Boarding3";
+import LabsPage from "./Labs";
+import AppointmentDetails from "./Appointment"
+import AppointmentConfirmation from "./Appointment2"
 export {
   Navbar,
   Billing,
@@ -28,5 +31,8 @@ export {
   ReportPage,
   Boarding1,
   Boarding2,
-  Boarding3
+  Boarding3,
+  LabsPage,
+  AppointmentDetails,
+  AppointmentConfirmation
 };

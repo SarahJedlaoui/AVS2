@@ -50,11 +50,14 @@ const ReportPage: React.FC = () => {
 
       <div className="w-full max-w-md mt-4">
         <LinearProgress
-          color="primary"
-          sx={{
-            height: 8,
-            borderRadius: 4,
-          }}
+            sx={{
+              height: 8,
+              borderRadius: 4,
+              backgroundColor: "#e0e0de", // Background of the progress bar track
+              "& .MuiLinearProgress-bar": {
+                backgroundColor: "#1C4FA0", // Custom color for the progress bar fill
+              },
+            }}
         />
       </div>
 
@@ -83,7 +86,7 @@ const ReportPage: React.FC = () => {
           Previous
         </button>
         <button
-          className="bg-black text-white px-6 py-3 rounded-full font-medium flex items-center justify-center"
+          className="bg-customblue text-white px-6 py-3 rounded-full font-medium flex items-center justify-center"
           disabled
         >
           Generating Report

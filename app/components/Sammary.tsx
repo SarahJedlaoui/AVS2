@@ -10,6 +10,13 @@ import "swiper/css";
 import "swiper/css/pagination";
 import axios from "axios";
 import clsx from "clsx";
+import CheckIcon from '@mui/icons-material/Check';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import Image from 'next/image';
+import Button from '@mui/material/Button';
 
 interface Appointment {
   date: string;
@@ -99,50 +106,63 @@ const Summary: React.FC = () => {
           whileInView="show"
           viewport={{ once: true }}
         >
-          <h1 className="font-semibold text-lg text-gray-800">After Visit Summary</h1>
-          <div className="text-gray-600">
-            <p>Report: 10/31/24</p>
-            <p>Dr. Crotty</p>
-          </div>
+          <h1 className="font-bold text-2xl text-gray-800 mb-4">My Health Report</h1>
+
         </motion.div>
 
         {/* Progress Bar */}
-        <div className="w-full">
-          <p className="text-sm text-gray-700 mb-1">
-            Progress: {selectedItems.length} section to see 
+        <div
+          style={{
+            backgroundColor: "#FFFFFF",
+            borderRadius: 12,
+            padding: "10px 16px",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.05)",
+            maxWidth: "w-full",
+          }}
+        >
+          <p className="text-md text-gray-500 font-bold">Your progress</p>
+          <p className="text-md text-[#1C4FA0] font-bold">
+            {selectedItems.length} of {filters.length} tasks completed
           </p>
           <LinearProgress
             variant="determinate"
             value={(selectedItems.length / filters.length) * 100}
             sx={{
-              height: 8,
+              height: 12,
               borderRadius: 4,
+              marginTop: 1,
               backgroundColor: "#e0e0de",
-              "& .MuiLinearProgress-bar": { backgroundColor: "#1e90ff" },
+              "& .MuiLinearProgress-bar": { backgroundColor: "#1C4FA0" },
             }}
           />
-        </div> 
+        </div>
+
 
         {/* Filter Buttons */}
-        <div className="flex w-full space-x-2 overflow-auto py-4">
+        <div className="flex w-full space-x-2 overflow-auto py-2 mb-4 mt-4">
           {filters.map((section) => (
             <button
               key={section}
               className={clsx(
-                "px-2 py-1 rounded-full text-md font-medium whitespace-nowrap",
-                filter === section ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+                "px-4 py-2 rounded-full text-md font-medium whitespace-nowrap",
+                filter === section ? "bg-[#1C4FA0] text-white" : "bg-[#F5F7FB] text-[#1C4FA0]"
               )}
               onClick={() => setFilter(section)}
+              style={{
+                boxShadow: filter === section ? "0px 2px 4px rgba(0, 0, 0, 0.1)" : "none",
+                border: filter === section ? "none" : "1px solid #E0E0E0",
+              }}
             >
+              {filter === section && <CheckIcon sx={{ fontSize: 16, color: "white", marginRight: 1 }} />}
               {section}
             </button>
           ))}
         </div>
 
+        <h2 className="font-bold text-xl text-gray-800 mb-3">Things you need to know</h2>
         {/* Conditionally Rendered Sections */}
         {(filter === "All" || filter === "Symptoms") && isSectionVisible("Symptoms") ? (
           <div className="w-full mt-4">
-            <h2 className="font-semibold text-gray-800 mb-3">Symptoms</h2>
             <Swiper spaceBetween={10} slidesPerView={1}>
               {parsedData?.symptoms?.map((symptom, index) => (
                 <SwiperSlide key={index}>
@@ -150,48 +170,58 @@ const Summary: React.FC = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
+
+
           </div>
         ) : filter === "Symptoms" && (
-          <button onClick={() => handleAddSection("Symptoms to Watch")} className="bg-blue-500 text-white px-4 py-2 rounded-full  mt-4">
+          <button onClick={() => handleAddSection("Symptoms to Watch")} className="bg-customblue text-white px-4 py-2 rounded-full  mt-4">
+            Add this section
+          </button>
+        )}
+
+
+
+        {(filter === "All" || filter === "Appointments") && isSectionVisible("Appointments") ? (
+          <div className="w-full mt-4">
+            <h2 className="font-bold text-xl text-gray-800 mb-3">Next Appointments</h2>
+            {parsedData?.appointments?.map((appointment, index) => (
+              <NextAppointment key={index} appointment={appointment} />
+            ))}
+
+            <div className="w-full mt-4">
+              <LabVisitCard />
+            </div>
+          </div>
+
+
+        ) : filter === "Appointments" && (
+          <button onClick={() => handleAddSection("Appointments")} className="bg-customblue text-white px-4 py-2 rounded-full  mt-4">
             Add this section
           </button>
         )}
 
         {(filter === "All" || filter === "Next Steps") && isSectionVisible("Next Steps") ? (
           <div className="w-full mt-4">
-            <h2 className="font-semibold text-gray-800 mb-3">To-dos</h2>
+            <h2 className="font-bold text-xl text-gray-800 mb-3">To-dos</h2>
             {parsedData?.todos?.map((todo, index) => (
               <ToDoItem key={index} text={todo} />
             ))}
           </div>
         ) : filter === "Next Steps" && (
-          <button onClick={() => handleAddSection("Next Steps")} className="bg-blue-500 text-white px-4 py-2 rounded-full mt-4">
-            Add this section
-          </button>
-        )}
-
-        {(filter === "All" || filter === "Appointments") && isSectionVisible("Appointments") ? (
-          <div className="w-full mt-4">
-            <h2 className="font-semibold text-gray-800 mb-3">Appointments</h2>
-            {parsedData?.appointments?.map((appointment, index) => (
-              <NextAppointment key={index} appointment={appointment} />
-            ))}
-          </div>
-        ) : filter === "Appointments" && (
-          <button onClick={() => handleAddSection("Appointments")} className="bg-blue-500 text-white px-4 py-2 rounded-full  mt-4">
+          <button onClick={() => handleAddSection("Next Steps")} className="bg-customblue text-white px-4 py-2 rounded-full mt-4">
             Add this section
           </button>
         )}
 
         {(filter === "All" || filter === "Medication Updates") && isSectionVisible("Medication Updates") ? (
           <div className="w-full mt-4">
-            <h2 className="font-semibold text-gray-800 mb-3">Medications</h2>
+            <h2 className="font-bold text-xl text-gray-800 mb-3">Medications</h2>
             {parsedData?.medications?.map((medication, index) => (
               <MedicationCard key={index} medication={medication} />
             ))}
           </div>
         ) : filter === "Medication Updates" && (
-          <button onClick={() => handleAddSection("Medication Updates")} className="bg-blue-500 text-white px-4 py-2 rounded-full mt-4">
+          <button onClick={() => handleAddSection("Medication Updates")} className="bg-customblue text-white px-4 py-2 rounded-full mt-4">
             Add this section
           </button>
         )}
@@ -202,18 +232,87 @@ const Summary: React.FC = () => {
 
 // Summary Card Component
 const SummaryCard: React.FC<{ title: string; description: string }> = ({ title, description }) => (
-  <div className="bg-white rounded-lg p-4 shadow-lg w-full text-left relative flex flex-col justify-between" style={{ height: "200px" }}>
+  <div
+    className="bg-white rounded-lg p-4 shadow-md w-full text-left relative flex flex-col justify-between"
+    style={{
+      height: '210px',
+      borderRadius: '12px',
+    }}
+  >
     <div>
-      <h3 className="font-semibold text-gray-800">{title}</h3>
+      <h3 className="font-semibold text-[#1C4FA0] text-xl mb-1">{title}</h3>
       <p className="text-gray-600 text-sm mt-2 overflow-hidden text-ellipsis" style={{ maxHeight: "100px" }}>
         {description}
       </p>
     </div>
-    <button className="absolute bottom-3 right-3 bg-blue-200 p-2 rounded-full text-gray-800">
-      <MdAutoAwesome />
-    </button>
+    <div className="flex justify-end mt-3 mb-5">
+      <button className="p-2 rounded-md text-[#1C4FA0] shadow-sm mb-2 " style={{ background: "#E0ECFF" }} >
+        <ArrowForwardIcon fontSize="small" />
+      </button>
+    </div>
   </div>
 );
+
+// lab Card Component
+const LabVisitCard: React.FC = () => {
+  const router = useRouter();
+
+  return (
+  <div className="bg-white rounded-lg p-4 shadow-lg w-full text-left flex flex-col justify-between" style={{ height: "120px" }}>
+    {/* Title and Test Name */}
+    <div className="flex items-center gap-2">
+      {/* Icon */}
+      <div
+        className="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full"
+      >
+        <img src={"/lab.png"} alt="Lab Icon" width={20} height={20} />
+      </div>
+
+      {/* Lab Visit Info */}
+      <div>
+        <h3 className="font-semibold text-gray-800">Upcoming Lab Visit</h3>
+        <p className="text-gray-600 text-sm">Comprehensive Metabolic Panel (CMP)</p>
+      </div>
+    </div>
+
+    {/* Divider Line */}
+    <hr
+      style={{
+        width: '100%',
+        borderTop: '1px solid rgba(0, 0, 0, 0.1)',
+        marginTop: '8px',
+        marginBottom: '8px',
+      }}
+    />
+
+    {/* Date and Book Button */}
+    <div className="flex items-center justify-between">
+      {/* Date */}
+      <div className="flex items-center text-sm text-gray-600">
+        <CalendarTodayIcon fontSize="small" className="text-gray-600 mr-1" />
+        <p>Before 25/12/25</p>
+      </div>
+
+      {/* Book Button */}
+      <Button
+        variant="contained"
+        style={{
+          backgroundColor: "#1C4FA0",
+          color: "#FFFFFF",
+          borderRadius: "20px",
+          textTransform: "none",
+          padding: "5px 16px",
+          fontSize: "0.875rem",
+        }}
+        onClick={() => router.push('/labs')} 
+      >
+        Book
+      </Button>
+    </div>
+  </div>
+ );
+};
+
 
 // To-Do Item Component
 const ToDoItem: React.FC<{ text: string }> = ({ text }) => (
@@ -225,20 +324,58 @@ const ToDoItem: React.FC<{ text: string }> = ({ text }) => (
 
 // Next Appointment Component
 const NextAppointment: React.FC<{ appointment: Appointment }> = ({ appointment }) => (
-  <div className="bg-white rounded-lg p-4 shadow-lg w-full mt-4">
-    <h2 className="font-semibold text-gray-800">Next appointment</h2>
-    <p className="text-sm text-gray-700 mt-2"><strong>Date:</strong> {appointment.date} at {appointment.time || "N/A"}</p>
-    <p className="text-sm text-gray-700"><strong>Location:</strong> {appointment.location}</p>
-    <p className="text-sm text-gray-700"><strong>Phone Number:</strong> {appointment.phone}</p>
-    <button className="bg-blue-500 text-white px-4 py-2 rounded-full font-medium mt-4 flex items-center justify-center w-full">
-      <MdCalendarToday className="mr-2" /> Reschedule
-    </button>
+  <div
+    className="bg-[#1C4FA0] flex rounded-xl p-4 shadow-lg w-full flex flex-col text-white"
+    style={{ height: "150px" }}
+  >
+    {/* Doctor Information */}
+    <div className="flex items-center justify-between mb-3 mt-2">
+      <div className="flex items-center gap-4">
+        {/* Doctor Image */}
+        <div
+          className="w-12 h-12 bg-white rounded-full flex items-center justify-center"
+          style={{ overflow: "hidden" }}
+        >
+          <Image src={"/doctor.png"} alt="Doctor" width={40} height={40} />
+        </div>
+
+        {/* Doctor Name and Specialty */}
+        <div>
+          <h2 className="font-semibold text-lg">Dr. John Watson</h2>
+          <p className="text-sm text-white opacity-80">Cardiologist</p>
+        </div>
+      </div>
+
+      {/* Arrow Icon */}
+      <ArrowForwardIosIcon fontSize="small" className="text-white opacity-80" />
+    </div>
+
+    {/* Divider Line */}
+    <hr
+      style={{
+        width: '100%',
+        borderTop: '1px solid rgba(255, 255, 255, 0.4)',
+        marginTop: '8px',
+        marginBottom: '8px',
+      }}
+    />
+
+    {/* Appointment Date and Time */}
+    <div className="flex items-center gap-2 mt-2">
+      <CalendarTodayIcon fontSize="small" className="text-white opacity-80 ml-5" />
+      <p className="text-sm opacity-80 mr-20">{appointment.date}</p>
+      <AccessTimeIcon fontSize="small" className="text-white opacity-80" />
+      <p className="text-sm opacity-80">{appointment.time}</p>
+    </div>
   </div>
 );
+
+
+
 // Medication Card Component
 const MedicationCard: React.FC<{ medication: Medication }> = ({ medication }) => (
   <div className="bg-white rounded-lg p-4 shadow-lg w-full text-left mb-2">
-    <h3 className="font-semibold text-gray-800">{medication.name}</h3>
+    <h3 className="font-semibold text-[#1C4FA0] text-xl mb-1">{medication.name}</h3>
     <p className="text-gray-600 text-sm mt-1">Quantity: {medication.quantity || "N/A"}</p>
     <p className="text-gray-600 text-sm mt-1">Instructions: {medication.usage_instructions || "No instructions provided"}</p>
   </div>

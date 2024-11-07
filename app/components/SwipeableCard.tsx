@@ -62,7 +62,7 @@ const SwipeableCard: React.FC<SwipeableCardProps> = ({ onSelectOptions }) => {
           {`${currentCard + 1} of ${options.length} sections included`}
         </div>
         <div className="bg-gray-200 h-2 rounded-full mt-2">
-          <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${((currentCard + 1) / options.length) * 100}%` }}></div>
+          <div className="bg-customblue h-2 rounded-full" style={{ width: `${((currentCard + 1) / options.length) * 100}%` }}></div>
         </div>
       </div>
 
