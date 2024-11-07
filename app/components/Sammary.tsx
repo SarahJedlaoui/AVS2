@@ -361,9 +361,9 @@ const NextAppointment: React.FC<{ appointment: Appointment }> = ({ appointment }
     />
 
     {/* Appointment Date and Time */}
-    <div className="flex items-center gap-2 mt-2">
-      <CalendarTodayIcon fontSize="small" className="text-white opacity-80 ml-5" />
-      <p className="text-sm opacity-80 mr-20">{appointment.date}</p>
+    <div className="flex items-center gap-2 mt-1">
+      <CalendarTodayIcon fontSize="small" className="text-white opacity-80 " />
+      <p className="text-sm opacity-80 mr-10">{appointment.date}</p>
       <AccessTimeIcon fontSize="small" className="text-white opacity-80" />
       <p className="text-sm opacity-80">{appointment.time}</p>
     </div>
