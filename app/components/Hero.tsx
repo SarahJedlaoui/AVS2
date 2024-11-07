@@ -108,7 +108,7 @@ const Hero: React.FC = () => {
       <div className="flexCenter mt-7">
         <button
           className={`rounded-full px-6 py-3 flex items-center justify-center ${
-            loading ? "bg-blue-700" : "bg-customblue"
+            loading ? "bg-customblue" : "bg-customblue"
           } text-white`}
           onClick={handleSubmit}
           disabled={loading}
