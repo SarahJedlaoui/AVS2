@@ -65,7 +65,7 @@ const ReportPersonalization = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/api/personalize", data);
+      const response = await axios.post("https://aftervisit-0b4087b58b8e.herokuapp.com/api/personalize", data);
 
       // Check if the response contains the saved data's ID
       console.log('response.data',response.data.data)
