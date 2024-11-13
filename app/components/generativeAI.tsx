@@ -5,6 +5,21 @@ import CheckIcon from "@mui/icons-material/Check";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
+
+
+// Define the default button style
+const defaultButtonStyle = {
+  borderRadius: "8px",
+  color: "#000000", // Ensure default text color is black
+  border: "1.5px solid #E58E73", // Default border color
+  padding: "10px 20px",
+  fontSize: "1rem",
+  fontWeight: "500",
+  textTransform: "capitalize",
+  boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)",
+  transition: "background-color 0.15s ease, color 0.15s ease",
+};
+
 // Define the types for each state
 type BotType = "Claude" | "Gemini" | "Chatgpt" | "";
 type RoleType = "Doctor" | "Nurse" | "Wellness Coach" | "";
@@ -95,22 +110,23 @@ const ReportPersonalization = () => {
       </Typography>
       <div className="flex space-x-4 mb-6">
         {["Claude", "Gemini", "Chatgpt"].map((bot) => (
-          <Button
-            key={bot}
-            onClick={() => toggleSelection(bot as BotType, setSelectedBot, selectedBot)}
-            className={`border-[1.5px] px-4 py-2 font-medium capitalize transition-colors duration-150 ${selectedBot === bot
-                ? "bg-[#41B5AC] text-white border-transparent"
-                : "border-[#E58E73] text-black"
-              }`}
-            style={{
-              borderRadius: "8px",
-              boxShadow: selectedBot === bot ? "none" : "0px 1px 2px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <img src={botIcons[bot as BotType]} alt={`${bot} icon`} width={16} height={16} className="mr-2" />
-            {selectedBot === bot}
-            {bot}
-          </Button>
+         <Button
+         key={bot}
+         onClick={() => toggleSelection(bot as BotType, setSelectedBot, selectedBot)}
+         className={`border-[1.5px] px-4 py-2 font-medium capitalize transition-colors duration-150 ${
+           selectedBot === bot
+             ? "bg-[#41B5AC] text-white border-transparent"
+             : "border-[#E58E73]"
+         }`}
+         style={{
+           borderRadius: "8px",
+           color: selectedBot === bot ? "#FFFFFF" : "#000000", // Set initial color here
+           boxShadow: selectedBot === bot ? "none" : "0px 1px 2px rgba(0, 0, 0, 0.1)",
+         }}
+       >
+         <img src={botIcons[bot as BotType]} alt={`${bot} icon`} width={16} height={16} className="mr-2" />
+         {bot}
+       </Button>
         ))}
       </div>
 
@@ -129,6 +145,7 @@ const ReportPersonalization = () => {
               }`}
             style={{
               borderRadius: "8px",
+              color: selectedRole === role ? "#FFFFFF" : "#000000",
               boxShadow: selectedRole === role ? "none" : "0px 1px 2px rgba(0, 0, 0, 0.1)",
             }}
           >
@@ -153,6 +170,7 @@ const ReportPersonalization = () => {
               }`}
             style={{
               borderRadius: "8px",
+              color: selectedInfo.includes(info as InfoType) ? "#FFFFFF" : "#000000",
               boxShadow: selectedInfo.includes(info as InfoType)
                 ? "none"
                 : "0px 1px 2px rgba(0, 0, 0, 0.1)",
@@ -179,6 +197,7 @@ const ReportPersonalization = () => {
               }`}
             style={{
               borderRadius: "8px",
+              color: selectedTone === tone ? "#FFFFFF" : "#000000",
               boxShadow: selectedTone === tone ? "none" : "0px 1px 2px rgba(0, 0, 0, 0.1)",
             }}
           >
@@ -203,6 +222,7 @@ const ReportPersonalization = () => {
               }`}
             style={{
               borderRadius: "8px",
+              color: selectedSource === source ? "#FFFFFF" : "#000000",
               boxShadow: selectedSource === source ? "none" : "0px 1px 2px rgba(0, 0, 0, 0.1)",
             }}
           >
