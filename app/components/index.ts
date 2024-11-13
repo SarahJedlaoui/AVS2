@@ -1,4 +1,5 @@
 import Navbar from "./Navbar";
+import Navbar2 from "./Navbar2";
 import Billing from "./Billing";
 import CardDeal from "./CardDeal";
 import Business from "./Business";
@@ -16,6 +17,8 @@ import Boarding3 from "./Boarding3";
 import LabsPage from "./Labs";
 import AppointmentDetails from "./Appointment"
 import AppointmentConfirmation from "./Appointment2"
+import AI from "./generativeAI"
+import Chat from "./Chat"
 export {
   Navbar,
   Billing,
@@ -34,5 +37,8 @@ export {
   Boarding3,
   LabsPage,
   AppointmentDetails,
-  AppointmentConfirmation
+  AppointmentConfirmation,
+  AI,
+  Navbar2,
+  Chat
 };

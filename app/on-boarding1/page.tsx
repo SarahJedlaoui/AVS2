@@ -1,6 +1,4 @@
 import {
-  Navbar,
-  Footer,
   Boarding1
 } from "../components";
 import React, { Suspense } from "react";

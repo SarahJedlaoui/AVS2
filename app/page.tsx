@@ -1,7 +1,4 @@
 import {
-  Navbar,
-  Hero,
-  Footer,
   Boarding1
 } from "./components";
 
