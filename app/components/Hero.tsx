@@ -76,6 +76,9 @@ const Hero: React.FC = () => {
       setLoading(false);
     }
   };
+  const handleNavigation = () => {
+    router.push("/generativeAI");
+  };
 
   return (
     <section id="home" className="flex md:flex-col flex-col paddingY">
@@ -95,10 +98,10 @@ const Hero: React.FC = () => {
 
       <div className="flexCenter">
         <button
-          onClick={handleDownload}
+          onClick={handleNavigation}
           className="bg-customblue text-white px-4 py-2 rounded-full"
         >
-          Download PDF
+          Ask Generative AI 
         </button>
       </div>
 
