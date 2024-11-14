@@ -1,6 +1,6 @@
-# HooBank-A Modern UI/UX Landing Page using Next.JS and TailwindCSS
+# AVS-A Modern UI/UX Landing Page using Next.JS and TailwindCSS
 
-![Screenshot 2023-08-11 213008](https://github.com/omunite215/Hoobank/assets/78680563/e33352b1-ff79-49e7-a9e1-4eaf995ce2c6)
+![Screenshot 2023-08-11 213008](https://github.com/omunite215/AVS/assets/78680563/e33352b1-ff79-49e7-a9e1-4eaf995ce2c6)
 
 
 
@@ -16,7 +16,7 @@ Features added other than Tutorial:-
 
 <p align="left">
   <a href="https://skillicons.dev">
-    <a href="https://www.figma.com/file/1Pn7NYsX8vZWqYVKiSCttf/HooBank?type=design&mode=design&t=tERqTJLmLvS6Vbo8-1">
+    <a href="https://www.figma.com/file/1Pn7NYsX8vZWqYVKiSCttf/AVS?type=design&mode=design&t=tERqTJLmLvS6Vbo8-1">
       <img src="https://skillicons.dev/icons?i=figma" />
     </a>
   </a>
@@ -24,7 +24,7 @@ Features added other than Tutorial:-
 
 A website which is a product page of a Bank displaying its products features, clients , feedbacks and many more.
 
-### The project is hosted on Vercel : [Hoobank](https://hoobank-alpha-nine.vercel.app/)
+### The project is hosted on Vercel : [AVS](https://AVS-alpha-nine.vercel.app/)
 
 ## :star: Give A Star
 
@@ -45,13 +45,13 @@ Before you start, make sure you have the following software installed on your co
 1. Clone the repository to your local machine
 
 ```bash
-  git clone https://github.com/omunite215/Project_Hoobank.git
+  git clone https://github.com/omunite215/Project_AVS.git
 
 ```
 2. Navigate to the project directory
 
 ```bash
-  cd Project_Hoobank
+  cd Project_AVS
 ```
 3. Install the necessary dependencies
 ```bash
@@ -115,5 +115,5 @@ Specializations:
 </p>
 
 <p align="center">
-  <img src="https://github.com/omunite215/Hoobank/assets/78680563/30e4f274-a9ac-49cc-99a7-ee657aa9b9ee" alt="Om's Logo Image"/>
+  <img src="https://github.com/omunite215/AVS/assets/78680563/30e4f274-a9ac-49cc-99a7-ee657aa9b9ee" alt="Om's Logo Image"/>
 </p>

@@ -18,7 +18,7 @@ const Navbar = () => {
       whileInView="show"
       viewport={{ once: true }}
     >
-      <Image src={'/avs.png'} alt="hoobank" width={124} height={32} loading="eager" />
+      <Image src={'/avs.png'} alt="AVS" width={124} height={32} loading="eager" />
 
       <ul className="list-none sm:flex hidden justify-end items-center flex-1">
         {navLinks.map((nav, index) => (

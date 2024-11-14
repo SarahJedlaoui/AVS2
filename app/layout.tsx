@@ -9,7 +9,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Hoobank",
+  title: "AVS",
   description: "The Next Generation Banking",
 };
 
