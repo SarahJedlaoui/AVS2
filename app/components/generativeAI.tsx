@@ -113,16 +113,12 @@ const ReportPersonalization = () => {
          <Button
          key={bot}
          onClick={() => toggleSelection(bot as BotType, setSelectedBot, selectedBot)}
-         className={`border-[1.5px] px-4 py-2 font-medium capitalize transition-colors duration-150 ${
+         className={`border-[1.5px] borderRadius-8 px-4 py-2 font-medium capitalize transition-colors duration-150 boxS rounded-lg shadow-sm ${
            selectedBot === bot
              ? "bg-[#41B5AC] text-white border-transparent"
-             : "border-[#E58E73]"
+             : " text-black shadow-[0px_1px_2px_rgba(0,0,0,0.1)]"
          }`}
-         style={{
-           borderRadius: "8px",
-           color: selectedBot === bot ? "#FFFFFF" : "#000000", // Set initial color here
-           boxShadow: selectedBot === bot ? "none" : "0px 1px 2px rgba(0, 0, 0, 0.1)",
-         }}
+        
        >
          <img src={botIcons[bot as BotType]} alt={`${bot} icon`} width={16} height={16} className="mr-2" />
          {bot}
@@ -139,15 +135,12 @@ const ReportPersonalization = () => {
           <Button
             key={role}
             onClick={() => toggleSelection(role as RoleType, setSelectedRole, selectedRole)}
-            className={`border-[1.5px] px-4 py-2 font-medium capitalize transition-colors duration-150 ${selectedRole === role
+            className={`border-[1.5px] borderRadius-8 px-4 py-2 font-medium capitalize transition-colors duration-150 boxS rounded-lg shadow-sm ${
+              selectedRole === role
                 ? "bg-[#41B5AC] text-white border-transparent"
-                : "border-[#E58E73] text-black"
-              }`}
-            style={{
-              borderRadius: "8px",
-              color: selectedRole === role ? "#FFFFFF" : "#000000",
-              boxShadow: selectedRole === role ? "none" : "0px 1px 2px rgba(0, 0, 0, 0.1)",
-            }}
+                : " text-black shadow-[0px_1px_2px_rgba(0,0,0,0.1)]"
+            }`}
+            
           >
             {selectedRole === role && <CheckIcon className="mr-1" fontSize="small" />}
             {role}
@@ -164,17 +157,12 @@ const ReportPersonalization = () => {
           <Button
             key={info}
             onClick={() => toggleMultiSelection(info as InfoType, setSelectedInfo, selectedInfo)}
-            className={`border-[1.5px] px-4 py-2 font-medium capitalize transition-colors duration-150 ${selectedInfo.includes(info as InfoType)
+            className={`border-[1.5px] borderRadius-8 px-4 py-2 font-medium capitalize transition-colors duration-150 boxS rounded-lg shadow-sm ${
+              selectedInfo.includes(info as InfoType)
                 ? "bg-[#41B5AC] text-white border-transparent"
-                : "border-[#E58E73] text-black"
-              }`}
-            style={{
-              borderRadius: "8px",
-              color: selectedInfo.includes(info as InfoType) ? "#FFFFFF" : "#000000",
-              boxShadow: selectedInfo.includes(info as InfoType)
-                ? "none"
-                : "0px 1px 2px rgba(0, 0, 0, 0.1)",
-            }}
+                : " text-black shadow-[0px_1px_2px_rgba(0,0,0,0.1)]"
+            }`}
+           
           >
             {selectedInfo.includes(info as InfoType) && <CheckIcon className="mr-1" fontSize="small" />}
             {info}
@@ -186,20 +174,17 @@ const ReportPersonalization = () => {
       <Typography variant="subtitle1" className="mb-2 text-gray-700">
         Try to be
       </Typography>
-      <div className="flex space-x-4 mb-6">
+      <div className="flex flex-wrap gap-4 mb-6">
         {["Technical", "Simple", "Encouraging", "Neutral"].map((tone) => (
           <Button
             key={tone}
             onClick={() => toggleSelection(tone as ToneType, setSelectedTone, selectedTone)}
-            className={`border-[1.5px] px-4 py-2 font-medium capitalize transition-colors duration-150 ${selectedTone === tone
+            className={`border-[1.5px] borderRadius-8 px-4 py-2 font-medium capitalize transition-colors duration-150 boxS rounded-lg shadow-sm ${
+              selectedTone === tone
                 ? "bg-[#41B5AC] text-white border-transparent"
-                : "border-[#E58E73] text-black"
-              }`}
-            style={{
-              borderRadius: "8px",
-              color: selectedTone === tone ? "#FFFFFF" : "#000000",
-              boxShadow: selectedTone === tone ? "none" : "0px 1px 2px rgba(0, 0, 0, 0.1)",
-            }}
+                : " text-black shadow-[0px_1px_2px_rgba(0,0,0,0.1)]"
+            }`}
+           
           >
             {selectedTone === tone && <CheckIcon className="mr-1" fontSize="small" />}
             {tone}
@@ -216,15 +201,12 @@ const ReportPersonalization = () => {
           <Button
             key={source}
             onClick={() => toggleSelection(source as SourceType, setSelectedSource, selectedSource)}
-            className={`border-[1.5px] px-4 py-2 font-medium capitalize transition-colors duration-150 ${selectedSource === source
+            className={`border-[1.5px] borderRadius-8 px-4 py-2 font-medium capitalize transition-colors duration-150 boxS rounded-lg shadow-sm ${
+              selectedSource === source
                 ? "bg-[#41B5AC] text-white border-transparent"
-                : "border-[#E58E73] text-black"
-              }`}
-            style={{
-              borderRadius: "8px",
-              color: selectedSource === source ? "#FFFFFF" : "#000000",
-              boxShadow: selectedSource === source ? "none" : "0px 1px 2px rgba(0, 0, 0, 0.1)",
-            }}
+                : " text-black shadow-[0px_1px_2px_rgba(0,0,0,0.1)]"
+            }`}
+           
           >
             {selectedSource === source && <CheckIcon className="mr-1" fontSize="small" />}
             {source}
