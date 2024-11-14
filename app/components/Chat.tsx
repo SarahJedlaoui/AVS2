@@ -5,6 +5,7 @@ import axios from "axios";
 import { Typography, TextField, IconButton, CircularProgress } from "@mui/material";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import SendIcon from "@mui/icons-material/Send";
+import { MdAutoAwesome } from 'react-icons/md';
 
 // Define the type for the chat data structure
 interface ChatData {
@@ -19,14 +20,17 @@ const ChatPage = () => {
     const [pdfFile, setPdfFile] = useState<File | null>(null);
     const [loadingResponse, setLoadingResponse] = useState(false);
     const [responseLoaded, setResponseLoaded] = useState(false); // New flag to control processing
-
-    // Fetch chat data by ID
+    const [loading, setLoading] = useState(false);
+    const [selectedItems, setSelectedItems] = useState<string[]>([]);
+    const router = useRouter();
     useEffect(() => {
         const fetchChatData = async () => {
             if (chatId) {
                 try {
                     const response = await axios.get(`https://aftervisit-0b4087b58b8e.herokuapp.com/api/personalize/${chatId}`);
                     setChatData(response.data);
+                    setSelectedItems(response.data.info)
+                    console.log(response.data.info)
                 } catch (error) {
                     console.error("Error fetching chat data:", error);
                 }
@@ -45,6 +49,49 @@ const ChatPage = () => {
         };
         loadPdfFile();
     }, []);
+
+
+    const handleSubmit = async () => {
+
+        if (!pdfFile || !chatId) {
+            console.error("PDF file or chat ID is missing");
+            return;
+        }
+        const formData = new FormData();
+        formData.append("pdf", pdfFile);
+        formData.append("options", JSON.stringify(selectedItems));
+
+        setLoading(true);
+
+        try {
+            const response = await fetch("https://aftervisit-0b4087b58b8e.herokuapp.com/api/upload", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+                const { id } = await response.json();
+
+                // Pass selected options and ID to the report page
+                const queryString = new URLSearchParams({
+                    id,
+                    selectedItems: JSON.stringify(selectedItems),
+                }).toString();
+
+                router.push(`/summaryAI?${queryString}`);
+            } else {
+                alert("Error processing the report");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error uploading data");
+        } finally {
+            setLoading(false);
+        }
+    };
+    // Fetch chat data by ID
+
+
 
     // Process PDF and prompt when pdfFile, chatData, and chatId are available and response hasn't loaded yet
     useEffect(() => {
@@ -83,6 +130,7 @@ const ChatPage = () => {
             handleProcessPdf();
         }
     }, [pdfFile, chatData, chatId, responseLoaded]); // Add responseLoaded to dependencies
+
 
     if (!chatData) return <Typography>Loading...</Typography>;
 
@@ -138,6 +186,8 @@ const ChatPage = () => {
 
             {/* View Report Button */}
             <button
+                onClick={handleSubmit}
+                disabled={loading}
                 style={{
                     backgroundColor: "#4EBE9D",
                     color: "#FFFFFF",
@@ -150,6 +200,7 @@ const ChatPage = () => {
                 }}
                 className="self-center w-full text-center mt-4"
             >
+                 {loading && <CircularProgress color="inherit" size={20} className="mr-2" />}
                 View My Report
             </button>
 

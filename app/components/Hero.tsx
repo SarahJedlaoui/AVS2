@@ -76,6 +76,9 @@ const Hero: React.FC = () => {
       setLoading(false);
     }
   };
+
+
+  
   const handleNavigation = () => {
     router.push("/generativeAI");
   };

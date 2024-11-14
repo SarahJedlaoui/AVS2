@@ -173,7 +173,7 @@ const ReportPersonalization = () => {
       And extract these infos
     </Typography>
     <div className="flex flex-wrap gap-4 mb-6">
-      {["Appointment", "Medications", "To-dos", "Recommendations"].map((info) => (
+      {["Appointments", "Medication Updates", "Next Steps", "Symptoms to Watch"].map((info) => (
         <Button
           key={info}
           onClick={() => toggleMultiSelection(info as InfoType, setSelectedInfo, selectedInfo)}

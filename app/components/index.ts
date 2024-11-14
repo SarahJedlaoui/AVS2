@@ -11,6 +11,7 @@ import Testimonials from "./Testimonials";
 import Hero from "./Hero";
 import ReportPage from "./ReportPage";
 import Summary from "./Sammary";
+import SummaryAI from "./SammaryAI";
 import Boarding1 from "./Boarding1";
 import Boarding2 from "./Boarding2";
 import Boarding3 from "./Boarding3";
@@ -31,6 +32,7 @@ export {
   Testimonials,
   Hero,
   Summary,
+  SummaryAI,
   ReportPage,
   Boarding1,
   Boarding2,
