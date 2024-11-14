@@ -12,7 +12,7 @@ export default function Home() {
           <Navbar2 />
         </nav>
       </header>
-      <section className=" bg-primary flexStart ">
+      <section className=" bg-[#FDF7F0] flexStart ">
         <section className="boxWidth">
           <Suspense fallback={<div>Loading...</div>}>
             <SummaryAI />

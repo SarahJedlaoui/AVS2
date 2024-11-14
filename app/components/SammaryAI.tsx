@@ -265,7 +265,7 @@ const LabVisitCard: React.FC = () => {
       <div
         className="flex items-center justify-center w-8 h-8 bg-[#E5E2D6] rounded-full"
       >
-        <img src={"/lab2.png"} alt="Lab Icon" width={20} height={20} />
+        <img src={"/Lab2.png"} alt="Lab Icon" width={20} height={20} />
       </div>
 
       {/* Lab Visit Info */}
