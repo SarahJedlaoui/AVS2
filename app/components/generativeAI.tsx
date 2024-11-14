@@ -83,8 +83,6 @@ const ReportPersonalization = () => {
       const response = await axios.post("https://aftervisit-0b4087b58b8e.herokuapp.com/api/personalize", data);
 
       // Check if the response contains the saved data's ID
-      console.log('response.data',response.data.data)
-      console.log('response.data.id ',response.data.data._id)
       if (response.data.data && response.data.data._id) {
         const savedDataId = response.data.data._id;
         // Redirect to /chat page with the savedDataId as a query parameter

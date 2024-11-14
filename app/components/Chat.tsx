@@ -12,6 +12,7 @@ interface ChatData {
     phrase?: string[];
     response?: any[];
 }
+let pdfProcessingLock = false;
 
 const ChatPage = () => {
     const [chatData, setChatData] = useState<ChatData | null>(null);
@@ -19,18 +20,20 @@ const ChatPage = () => {
     const chatId = searchParams.get("id");
     const [pdfFile, setPdfFile] = useState<File | null>(null);
     const [loadingResponse, setLoadingResponse] = useState(false);
-    const [responseLoaded, setResponseLoaded] = useState(false); // New flag to control processing
+    const [responseLoaded, setResponseLoaded] = useState(false);
     const [loading, setLoading] = useState(false);
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
     const router = useRouter();
+    const [message, setMessage] = useState(""); // State for user input message
+
     useEffect(() => {
         const fetchChatData = async () => {
             if (chatId) {
                 try {
                     const response = await axios.get(`https://aftervisit-0b4087b58b8e.herokuapp.com/api/personalize/${chatId}`);
                     setChatData(response.data);
-                    setSelectedItems(response.data.info)
-                    console.log(response.data.info)
+                    setSelectedItems(response.data.info);
+                    console.log(response.data.info);
                 } catch (error) {
                     console.error("Error fetching chat data:", error);
                 }
@@ -50,9 +53,7 @@ const ChatPage = () => {
         loadPdfFile();
     }, []);
 
-
     const handleSubmit = async () => {
-
         if (!pdfFile || !chatId) {
             console.error("PDF file or chat ID is missing");
             return;
@@ -89,48 +90,77 @@ const ChatPage = () => {
             setLoading(false);
         }
     };
-    // Fetch chat data by ID
 
+    const handleProcessPdf = async () => {
+        if (pdfProcessingLock || !pdfFile || !chatData || !chatId || responseLoaded) return;
+        
+        pdfProcessingLock = true; // Set lock to prevent re-entry
+        setLoadingResponse(true);
 
+        const data = new FormData();
+        data.append('pdf', pdfFile);
+        data.append('chatId', chatId);
+        data.append('prompt', chatData.phrase?.[chatData.phrase.length - 1] || "");
 
-    // Process PDF and prompt when pdfFile, chatData, and chatId are available and response hasn't loaded yet
-    useEffect(() => {
-        const handleProcessPdf = async () => {
-            if (!pdfFile || !chatData || !chatId || responseLoaded) return;
+        try {
+            const response = await axios.post("https://aftervisit-0b4087b58b8e.herokuapp.com/api/upload/respond", data, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
 
-            setLoadingResponse(true);
-
-            const data = new FormData();
-            data.append('pdf', pdfFile);
-            data.append('chatId', chatId);
-            data.append('prompt', chatData.phrase?.[chatData.phrase.length - 1] || "");
-
-            try {
-                const response = await axios.post("https://aftervisit-0b4087b58b8e.herokuapp.com/api/upload/respond", data, {
-                    headers: { 'Content-Type': 'multipart/form-data' },
-                });
-
-                if (response.data && response.data.extractedData) {
-                    setChatData(prevChatData => ({
-                        ...prevChatData,
-                        response: [...(prevChatData?.response || []), response.data.extractedData],
-                    }));
-                    setResponseLoaded(true); // Mark response as loaded
-                } else {
-                    console.error("No extracted data received", response);
-                }
-            } catch (error) {
-                console.error("Error processing PDF:", error);
+            if (response.data && response.data.extractedData) {
+                setChatData(prevChatData => ({
+                    ...prevChatData,
+                    response: [...(prevChatData?.response || []), response.data.extractedData],
+                }));
+                setResponseLoaded(true);
+            } else {
+                console.error("No extracted data received", response);
             }
-
-            setLoadingResponse(false);
-        };
-
-        if (pdfFile && chatData && !responseLoaded) {
-            handleProcessPdf();
+        } catch (error) {
+            console.error("Error processing PDF:", error);
         }
-    }, [pdfFile, chatData, chatId, responseLoaded]); // Add responseLoaded to dependencies
 
+        setLoadingResponse(false);
+    };
+
+    useEffect(() => {
+        handleProcessPdf();
+    }, [pdfFile, chatData, chatId, responseLoaded]);
+
+    const handleSendMessage = async () => {
+        if (!message.trim() || !pdfFile || !chatId) return;
+
+        // Append user message to `phrase` array in `chatData`
+        setChatData((prevChatData) => ({
+            ...prevChatData,
+            phrase: [...(prevChatData?.phrase || []), message],
+        }));
+        
+        setLoadingResponse(true);
+
+        const data = new FormData();
+        data.append("pdf", pdfFile);
+        data.append("chatId", chatId);
+        data.append("prompt", message);
+
+        try {
+            const response = await axios.post("https://aftervisit-0b4087b58b8e.herokuapp.com/api/upload/respond", data, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+
+            if (response.data && response.data.extractedData) {
+                setChatData((prevChatData) => ({
+                    ...prevChatData,
+                    response: [...(prevChatData?.response || []), response.data.extractedData],
+                }));
+            }
+        } catch (error) {
+            console.error("Error processing response:", error);
+        } finally {
+            setLoadingResponse(false);
+            setMessage("");
+        }
+    };
 
     if (!chatData) return <Typography>Loading...</Typography>;
 
@@ -162,7 +192,7 @@ const ChatPage = () => {
                                 </Typography>
                             </div>
                             <div className="bg-white p-4 rounded-lg shadow-sm flex-1">
-                                {loadingResponse ? (
+                                {loadingResponse && index ===  (chatData?.phrase?.length ?? 0) - 1 ? (
                                     <div className="flex items-center space-x-2">
                                         <CircularProgress size={24} />
                                         <Typography variant="body2" className="text-gray-800">
@@ -207,9 +237,11 @@ const ChatPage = () => {
             {/* Input Box */}
             <div className="mt-4 flex items-center pt-2">
                 <TextField
-                    placeholder="Message"
+                    placeholder="Type your message"
                     fullWidth
                     variant="outlined"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
                     InputProps={{
                         style: {
                             borderRadius: "25px",
@@ -218,7 +250,7 @@ const ChatPage = () => {
                     }}
                     sx={{ flex: 1 }}
                 />
-                <IconButton color="primary">
+                <IconButton color="primary" onClick={handleSendMessage}>
                     <SendIcon />
                 </IconButton>
             </div>
