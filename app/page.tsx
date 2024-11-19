@@ -1,14 +1,15 @@
 import {
-  Boarding1
+  Boarding1,
+ AI
 } from "./components";
 
 export default function Home() {
   return (
-    <main className=" bg-primary w-full overflow-hidden font-poppins">
+    <main className=" bg-[#FDF7F0] w-full overflow-hidden font-poppins">
      
-      <section className=" bg-primary flexStart">
+      <section className=" bg-[#FDF7F0] flexStart">
         <section className="boxWidth">
-          <Boarding1 />
+          <AI />
         </section>
       </section>
       

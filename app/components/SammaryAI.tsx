@@ -221,7 +221,7 @@ const Summary: React.FC = () => {
             ))}
           </div>
         ) : filter === "Medication Updates" && (
-          <button onClick={() => handleAddSection("Medication Updates")} className="bg-[#C1BA9D]e text-white px-4 py-2 rounded-full mt-4">
+          <button onClick={() => handleAddSection("Medication Updates")} className="bg-[#C1BA9D] text-white px-4 py-2 rounded-full  mt-4">
             Add this section
           </button>
         )}
@@ -304,7 +304,7 @@ const LabVisitCard: React.FC = () => {
           padding: "5px 16px",
           fontSize: "0.875rem",
         }}
-        onClick={() => router.push('/labs')} 
+        //onClick={() => router.push('/labs')} 
       >
         Book
       </Button>
