@@ -10,7 +10,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "AVS",
-  description: "The Next Generation Banking",
+  description: "After Visit Summary",
 };
 
 export default function RootLayout({
