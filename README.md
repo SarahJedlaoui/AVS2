@@ -1,6 +1,6 @@
 # 🏥 AVS 2.0 - AI-Powered After-Visit Summary
 
-![AVS](avs-image.png)
+![AVS](avs.png)
 
 **AVS 2.0** is an enhanced After-Visit Summary (AVS) application that allows users to interact directly with AI to extract and personalize their medical information. With this application, patients can ask questions about their AVS, extract specific data, and customize how they interact with the AI.
 
