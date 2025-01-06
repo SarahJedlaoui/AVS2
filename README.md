@@ -73,7 +73,7 @@
   </a>
 </p>
 
-### The project is hosted on Vercel : [AVS](https://avs-three.vercel.app/)
+### The project is hosted on Vercel : [AVS](https://avs-2.vercel.app/)
 
 ## :star: Give A Star
 
