@@ -1,35 +1,36 @@
-# 🏥 After-Visit Summary (AVS) Application
+# 🏥 AVS 2.0 - AI-Powered After-Visit Summary
 
 ![AVS](avs-image.png)
 
+**AVS 2.0** is an enhanced After-Visit Summary (AVS) application that allows users to interact directly with AI to extract and personalize their medical information. With this application, patients can ask questions about their AVS, extract specific data, and customize how they interact with the AI.
 
+## Features
 
-An innovative app designed to help patients easily access, organize, and manage their medical records after a visit. With AI-powered data extraction and user-friendly features, patients can take control of their healthcare in just a few taps.
+### 🧠 **AI Interaction**
+- A dedicated "Ask AI" button on the landing page enables users to start a conversation with their preferred AI assistant.
+- Users can choose between **ChatGPT**, **Gemini**, or **Claude** for their personalized experience.
 
+### 🎭 **Personalized AI Behavior**
+- Customize how the AI interacts:
+  - Pretend to be a **Doctor**, **Nurse**, or **Wellness Coach**.
+  - Adjust the tone of responses: **Technical**, **Encouraging**, **Neutral**, or **Simple**.
 
+### 📋 **Data Selection and Extraction**
+- Choose the type of data to extract from your After-Visit Summary:
+  - **Appointments**
+  - **Medication Updates**
+  - **Next Steps**
+  - **Symptoms to Watch**
+- Receive responses tailored to the selected categories in a user-friendly format.
 
-## 🌟 Features
+### 🗣️ **Conversational AI Support**
+- Engage in a conversation with the AI to ask follow-up questions about your AVS.
+- Get real-time answers to your medical summary-related queries.
 
-### 📄 View After-Visit Summaries
-- Access your After-Visit Summaries (AVS) in PDF format directly within the app.
+### 📄 **View and Save Reports**
+- Once data is extracted, view a detailed report summarizing the information.
 
-### 🧠 AI-Powered Data Extraction
-- Swipe through cards to select specific data (appointments, symptoms, medications, etc.).
-- AI extracts and organizes the selected data into a user-friendly display.
-
-### 📋 Simplified Data Presentation
-- All extracted information is shown on a clean, organized and user-friendly page.
-- Makes it easy to locate and understand critical health details.
-- No more digging through lengthy PDFs to find what you need!
-
-### 📅 Appointment Management
--Edit, confirm, or manage your medical appointments directly from the app.
--Stay on top of your healthcare schedule with ease.
-
-### 🔍 Search Nearby Labs
-- Find labs in your area for tests or follow-ups.
-- Integrated search functionality helps you locate the best options quickly.
-
+---
 
 ## 🚀 Benefits
 
@@ -39,18 +40,27 @@ An innovative app designed to help patients easily access, organize, and manage 
 ### 🤖 Leverage AI:
 -  Automate data extraction for better accuracy and organization.
 
-### 📈 Take Control:
-- Manage appointments and search for labs effortlessly.
-
 
  
 ## 📌 How It Works 
 
-1- Open your After-Visit Summary (PDF).
-2- Swipe through cards to select the data you want to extract.
-3- Let AI extract and display your selected data in an organized format.
-4- Manage your appointments or find labs near you—all in one app!
 
+### Step 1: Start with "Ask AI"
+- Click the **"Ask AI"** button on the landing page.
+- Select your preferred AI assistant: **ChatGPT**, **Gemini**, or **Claude**.
+
+### Step 2: Personalize Your Interaction
+- Choose how you want the AI to respond:
+  - Pretend to be a **Doctor**, **Nurse**, or **Wellness Coach**.
+  - Adjust the tone to be **Technical**, **Encouraging**, or **Simple**.
+- Select the data you want to extract from your AVS (e.g., **Appointments**, **Next Steps**).
+
+### Step 3: Receive AI Responses
+- View the AI's response in a clean and organized format.
+- Keep the conversation going by asking additional questions about your AVS.
+
+### Step 4: View Your Report
+- Once satisfied, click the "View My Report" button to see a detailed summary of the extracted data.
 
 
 ### Link to Figma File:
