@@ -20,6 +20,10 @@ import AppointmentDetails from "./Appointment"
 import AppointmentConfirmation from "./Appointment2"
 import AI from "./generativeAI"
 import Chat from "./Chat"
+import Steering from "./Steering"
+import Prompt from "./Promt-traing"
+import Understanding from "./Understanding-the-Basics"
+
 export {
   Navbar,
   Billing,
@@ -42,5 +46,9 @@ export {
   AppointmentConfirmation,
   AI,
   Navbar2,
-  Chat
+  Chat,
+  Steering,
+  Prompt,
+  Understanding
+
 };
