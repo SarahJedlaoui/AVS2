@@ -38,15 +38,15 @@ const Hero: React.FC = () => {
     
     >
       {/* Title Section */}
-      <h1 className="text-2xl font-semibold ss:text-[72px] text-[52px]  text-black mb-2 text-center">
+      <h1 className="text-2xl font-semibold ss:text-[72px] text-[52px]  text-black mb-2 text-center mt-20">
         Hi there!
       </h1>
-      <h2 className="text-lg font-semibold text-gray-800 mb-6 text-center">
+      <h2 className="text-lg font-semibold text-gray-800 mb-6 text-center mt-5">
       Your after-visit summary is ready
       </h2>
 
       {/* PDF Preview Section */}
-      <div className="w-full max-w-md mb-6 flex justify-center">
+      <div className="w-full max-w-md mb-10 flex justify-center">
         <PDFCarousel />
       </div>
 

@@ -1,18 +1,14 @@
 import {
- Hero,
- Navbar2,
- Steering
+  Hero
 } from "./components";
 
 export default function Home() {
   return (
-    <main className=" bg-[#FDF7F0] w-full overflow-hidden font-poppins">
-      <section className=" bg-[#FDF7F0] flexStart w-full">
-        <section className="boxWidth">
-          <Hero />
-        </section>
-      </section>
-      
+    <main className="bg-white w-full overflow-hidden font-poppins flex justify-center">
+      {/* Container simulating mobile width */}
+      <div className="bg-[#FDF7F0] w-[500px] min-h-screen">
+        <Hero />
+      </div>
     </main>
   );
 }

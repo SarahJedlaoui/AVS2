@@ -94,7 +94,7 @@ const Summary: React.FC = () => {
   return (
     <section
       className="flex flex-col items-center min-h-screen px-6 py-8 space-y-6"
-      style={{ backgroundColor: "#F8F5EE" }}
+      style={{ backgroundColor: "#FDF7F0" }}
     >
       {/* Content Container */}
       <div className="w-full max-w-md" style={{ backgroundColor: "transparent" }}>
